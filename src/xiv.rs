@@ -33,6 +33,9 @@ struct ItemData {
 }
 #[allow(dead_code)]
 impl ItemData {
+    pub async fn new(id: String) -> Self {
+        get_item_data(id).await
+    }
     pub fn get_name(&self) -> String {
         self.name_en.clone()
     }
@@ -54,7 +57,7 @@ mod tests {
     #[tokio::test]
     async fn test_get_item_data() {
         assert_eq!(
-            get_item_data("5503".to_string()).await.get_name(),
+            ItemData::new("5503".to_string()).await.get_name(),
             "Animal Glue"
         );
     }
