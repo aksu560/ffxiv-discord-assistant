@@ -25,6 +25,7 @@ fn request_url_builder(endpoint: &str, item: String) -> String {
 }
 
 #[derive(Deserialize, Default, Clone)]
+#[allow(dead_code)]
 struct ItemData {
     #[serde(rename="Name_en")]
     name_en: String
@@ -50,18 +51,10 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_item2id() {
+    async fn test_get_item_data() {
         assert_eq!(
             get_item_data("5503".to_string()).await.get_name(),
             "Animal Glue"
         );
     }
-    #[tokio::test]
-    async fn test_item2id_again() {
-        assert_eq!(
-            get_item_data("5503".to_string()).await.get_name(),
-            "Animal Glue"
-        );
-    }
-
 }
