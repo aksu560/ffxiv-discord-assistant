@@ -49,6 +49,18 @@ async fn get_item_data(id: String) -> ItemData {
         Err(..) => ItemData::default(),
     }
 }
+#[derive(Deserialize, Default, Clone)]
+#[allow(dead_code)]
+struct WorldName {
+    #[serde(rename = "Name")]
+    name: String
+}
+
+#[allow(dead_code)]
+#[cached(time = 86400, sync_writes = true)]
+async fn get_world_name(id: String) -> String {
+    get(request_url_builder("https://xivapi.com/World/", id)).await.unwrap().json::<WorldName>().await.unwrap().name
+}
 
 #[cfg(test)]
 mod tests {
@@ -60,5 +72,13 @@ mod tests {
             ItemData::new("5503".to_string()).await.get_name(),
             "Animal Glue"
         );
+    }
+
+    #[tokio::test]
+    async fn test_world_name() {
+        assert_eq!(
+            get_world_name("55".to_string()).await,
+            "Lamia"
+        )
     }
 }
