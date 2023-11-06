@@ -1,11 +1,11 @@
-use std::env;
-use cached::proc_macro::{cached};
+use cached::proc_macro::cached;
+use reqwest::get;
 use serde::Deserialize;
-use reqwest::{get};
+use std::env;
 
 #[allow(dead_code)]
 struct XivConfig {
-    api_key: String
+    api_key: String,
 }
 #[allow(dead_code)]
 impl Default for XivConfig {
@@ -16,7 +16,7 @@ impl Default for XivConfig {
     }
 }
 
-#[cached(time=86400, sync_writes=true)]
+#[cached(time = 86400, sync_writes = true)]
 fn get_api_key() -> String {
     env::var("XIV_TOKEN").expect("Missing XIV Token")
 }
@@ -28,8 +28,8 @@ fn request_url_builder(endpoint: &str, item: String) -> String {
 #[derive(Deserialize, Default, Clone)]
 #[allow(dead_code)]
 struct ItemData {
-    #[serde(rename="Name_en")]
-    name_en: String
+    #[serde(rename = "Name_en")]
+    name_en: String,
 }
 #[allow(dead_code)]
 impl ItemData {
@@ -41,12 +41,12 @@ impl ItemData {
     }
 }
 
-#[cached(time=86400, sync_writes=true)]
+#[cached(time = 86400, sync_writes = true)]
 async fn get_item_data(id: String) -> ItemData {
     let response = get(request_url_builder("https://xivapi.com/item/", id)).await;
     match response {
         Ok(r) => r.json::<ItemData>().await.unwrap(),
-        Err(..) => ItemData::default()
+        Err(..) => ItemData::default(),
     }
 }
 
