@@ -7,6 +7,7 @@ use reqwest::{get};
 struct XivConfig {
     api_key: String
 }
+#[allow(dead_code)]
 impl Default for XivConfig {
     fn default() -> Self {
         Self {
@@ -30,7 +31,7 @@ struct ItemData {
     #[serde(rename="Name_en")]
     name_en: String
 }
-
+#[allow(dead_code)]
 impl ItemData {
     pub fn get_name(&self) -> String {
         self.name_en.clone()
