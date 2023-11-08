@@ -499,7 +499,6 @@ dependencies = [
  "cached",
  "ffxiv-crafting",
  "mongodb",
- "once_cell",
  "reqwest",
  "serde",
  "serenity",
