@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  XIV_TOKEN: ${{ secrets.XIV_TOKEN }}
 
 jobs:
   build:
