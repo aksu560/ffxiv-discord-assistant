@@ -18,7 +18,7 @@ impl Default for XivConfig {
 
 #[cached(time = 86400, sync_writes = true)]
 fn get_api_key() -> String {
-    env::var("XIV_TOKEN").expect("Missing XIV Token")
+    env::var("XIV_TOKEN").expect("Please set your XIV_TOKEN environment variable")
 }
 
 fn request_url_builder(endpoint: &str, item: String) -> String {
